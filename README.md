@@ -1,2 +1,2 @@
-# vibe-check
+# SoundScout
 TBD
