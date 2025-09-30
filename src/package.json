@@ -1,0 +1,16 @@
+{
+  "name": "soundscout",
+  "version": "1.0.0",
+  "description": "SoundScout aims to help users discover and learn about musical instruments through AI-powered recognition. Whether it's an image, video, or sound, users can explore the instrument's identity, history, and musical influence.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0",
+    "hbs": "^4.2.0"
+  }
+}
