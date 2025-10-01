@@ -1,0 +1,15 @@
+<html>
+  <head>
+    <script>
+      navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+      .then((stream) => { const video = document.getElementById("video")
+      video.srcObject = stream }) .catch((err) => alert(`${err.name}
+      ${err.message}`));
+    </script>
+  </head>
+  <body>
+    <div>
+      <video id="video" autoplay></video>
+    </div>
+  </body>
+</html>
