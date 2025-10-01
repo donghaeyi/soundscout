@@ -1,20 +1,22 @@
-// index.js (server-side)
 const express = require('express');
 const exphbs = require('express-handlebars');
+const path = require('path');
 const app = express();
 
-// Configure Handlebars as the templating engine
-app.engine('handlebars', exphbs.engine());
-app.set('view engine', 'handlebars');
+// Configure Handlebars
+const hbs = exphbs.create({
+    extname: '.hbs',
+    layoutsDir: path.join(__dirname, 'views', 'layouts'),
+    partialsDir: path.join(__dirname, 'views', 'partials'),
+});
 
-// Define a route that renders an HBS template
+app.engine('hbs', hbs.engine);
+app.set('view engine', 'hbs');
+app.set('views', path.join(__dirname, 'views'));
+
+// Route
 app.get('/', (req, res) => {
-    const data = {
-        name: 'World'
-    };
-    res.render('home', data); // Renders views/home.handlebars with the 'data' object
+    res.render('pages/home', { name: 'World' });
 });
 
-app.listen(3000, () => {
-    console.log('Server listening on port 3000');
-});
+app.listen(3000, () => console.log('Server listening on port 3000'));
