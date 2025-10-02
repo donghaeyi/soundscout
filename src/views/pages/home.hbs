@@ -3,34 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        .note {
-        position: absolute;
-        top: 50%;
-        animation: move 6s linear infinite;
-        font-size: 2rem;
-        }
-
-        /* Different speeds for variety */
-        .note:nth-child(2) { animation-duration: 8s; top: 40%; }
-        .note:nth-child(3) { animation-duration: 10s; top: 60%; }
-
-        @keyframes move {
-        from { left: 100%; transform: rotate(0deg); }
-        to { left: -10%; transform: rotate(360deg); }
-        }
-    </style>
-</head>s
+    <link rel="stylesheet" href="css/styles.css">
+    <title>SoundScout Home Page</title>
+</head>
 <body>
     {{!-- add images, start detecting button, musical notes span --}}
-    <img src="img/instrument_img.jpeg" alt="instrument image"> 
+    {{!-- add a hook slogan (eg "See it. Hear it. Know it"), brief explaination
+     ("Our dual-core AI uses both vision and sound to give you the most accurate results.") --}}
+    <section>
+        <div class="first-box">
+            <h1 class="slogan">SoundScout: See it. Hear it. Know it.</h1>
+            <p class="explaination">Our dual-core AI uses both vision and sound to give you the most accurate results.</p>
+            <button>Start Instrument Recognition!</button>
+        </div>
+    </section>
+    <section id="how-it-works">
+        <div class="second-box">
+            <h2>How SoundScout Works: The Power of Dual-Core AI</h2>
+
+            <div class="steps-container">
+                
+                <div class="step-block">
+                    <div class="step-icon">👁️</div>
+                    <h3>Show It</h3>
+                    <p>Open your camera and point it at any musical instrument.</p>
+                </div>
+
+                <div class="step-block">
+                    <div class="step-icon">👂</div>
+                    <h3>Play It</h3>
+                    <p>Let the microphone listen as you play a few notes.</p>
+                </div>
+
+                <div class="step-block">
+                    <div class="step-icon">✅</div>
+                    <h3>Know It!</h3>
+                    <p>InstruLens combines visual and audio data for the most accurate ID.</p>
+                </div>
+            </div>
+        </div>
+        
+    </section>
+
+    
     <div>
-        <button>Start Detecting</button>
-    </div>
-    <div>
-        <div class="note">🎵</div>
-        <div class="note">🎶</div>
-        <div class="note">🎼</div>
+        <div class="note">&#9835;</div>
+        <div class="note">&#9833;</div>
+        <div class="note">&#9839;</div>
+        <div class="note">&#119070;</div>
+        <div class="note">&#9834;</div>
     </div>
 </body>
 </html>
