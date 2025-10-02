@@ -2,15 +2,30 @@
   "name": "soundscout",
   "version": "1.0.0",
   "description": "SoundScout aims to help users discover and learn about musical instruments through AI-powered recognition. Whether it's an image, video, or sound, users can explore the instrument's identity, history, and musical influence.",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "handlebars",
+    "express",
+    "templating",
+    "node",
+    "instrument-recognition"
+  ],
+  "contributors": [
+    "Donghae Yi",
+    "Abdirahman Ebiso",
+    "Nguyen Pham"
+  ],
   "dependencies": {
     "express": "^5.1.0",
+    "express-handlebars": "^8.0.1",
     "hbs": "^4.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
   }
 }
