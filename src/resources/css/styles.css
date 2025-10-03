@@ -256,3 +256,50 @@ button:active {
     transform: translate(-50%, -50%);
     pointer-events: none;
 }
+
+/* Nav */
+nav img {
+    margin: 5px auto 5px 20px;
+    cursor: pointer;
+    height: 60px;
+}
+
+nav {
+    margin: none;
+    background-color: white;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    z-index: 1000;
+}
+
+body {
+    margin-top: 75px; /* Move the content of each page down so the nav bar wont block it */
+    min-height: 100vh;
+    flex-grow: 1;
+    background-color: white;
+}
+
+/* Footer */
+footer p {
+    margin-bottom: 20px;
+}
+
+html, body {
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 0;
+    height: 100%;
+  }
+
+footer {
+    bottom: 0; 
+    width: 100%;
+    position: fixed;
+}

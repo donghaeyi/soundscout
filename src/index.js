@@ -18,9 +18,19 @@ app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "views"));
 
 // Route
-app.get("/", (req, res) => {
-  res.render("pages/home");
+app.get('/', (req, res) => {
+    res.render('pages/home');
 });
+
+app.get('/home', (req, res) => {
+    res.render('pages/home');
+});
+
+// app.get('/recognition', (req,res) => {
+//     res.render('pages/recognition')
+// app.get("/", (req, res) => {
+//   res.render("pages/home");
+// });
 
 app.get("/recognition", (req, res) => {
   res.render("pages/recognition");
