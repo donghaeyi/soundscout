@@ -1,11 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/styles.css">
-    <title>SoundScout Home Page</title>
-</head>
 <body>
     {{!-- add images, start detecting button, musical notes span --}}
     {{!-- add a hook slogan (eg "See it. Hear it. Know it"), brief explaination
@@ -14,7 +8,7 @@
         <div class="first-box">
             <h1 class="slogan">SoundScout: See it. Hear it. Know it.</h1>
             <p class="explaination">Our dual-core AI uses both vision and sound to give you the most accurate results.</p>
-            <button>Start Instrument Recognition!</button>
+            <button type="submit" onclick="window.location.href='/recognition'">Start Instrument Recognition!</button>
         </div>
     </section>
     <section id="how-it-works">
