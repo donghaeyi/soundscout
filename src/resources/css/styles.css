@@ -285,11 +285,6 @@ body {
     background-color: white;
 }
 
-/* Footer */
-footer p {
-    margin-bottom: 20px;
-}
-
 html, body {
     margin-bottom: 0;
     margin-left: 0;
@@ -298,8 +293,11 @@ html, body {
     height: 100%;
   }
 
+/* Footer */
 footer {
     bottom: 0; 
     width: 100%;
-    position: fixed;
+}
+footer p {
+    padding-bottom: 15px;
 }
