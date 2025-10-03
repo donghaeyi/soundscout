@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Interactive Instrument Page</title>
+  <style>
+    /* Base Reset & Animated Background */
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: sans-serif;
+    }
+
+    body {
+      background: linear-gradient(-45deg, #1a2a6c, #b21f1f, #fdbb2d, #1a2a6c);
+      background-size: 400% 400%;
+      animation: waveGradient 20s ease-in-out infinite;
+      color: white;
+      overflow: hidden; /* prevent scrolling */
+    }
+
+    @keyframes waveGradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Flex container for left/right panels */
+    .container {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      height: 100vh;
+    }
+
+    /* Left panel (info) */
+.left-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 100vh;
+  padding: 30px;
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden; /* remove scrolling */
+}
+
+    /* Right panel (3D model) */
+    .right-panel {
+      width: 60%;
+      min-width: 500px;
+      flex-shrink: 0;
+      position: relative;
+      background: rgba(0, 0, 0, 0.2);
+      box-sizing: border-box;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Sketchfab embed styling */
+    .sketchfab-embed-wrapper {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sketchfab-embed-wrapper iframe {
+      flex-grow: 1;
+      width: 100%;
+      border: none;
+      background: #000;
+    }
+
+    .sketchfab-embed-wrapper p {
+      font-size: 13px;
+      font-weight: normal;
+      margin: 5px 0 0 0;
+      color: #4A4A4A;
+      text-align: center;
+    }
+
+    .sketchfab-embed-wrapper p a {
+      font-weight: bold;
+      color: #1CAAD9;
+      text-decoration: none;
+    }
+
+    .sketchfab-embed-wrapper p a:hover {
+      text-decoration: underline;
+    }
+
+    /* Tabs */
+    .tabs {
+      flex-grow: 1;
+    }
+
+    .tab-buttons {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .tab-buttons button {
+      flex: 1;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      cursor: pointer;
+      color: white;
+      border-radius: 4px;
+      transition: background 0.3s;
+    }
+
+    .tab-buttons button.active,
+    .tab-buttons button:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .tab-content {
+      background: rgba(0, 0, 0, 0.4);
+      padding: 15px;
+      border-radius: 5px;
+      min-height: 200px;
+      overflow-y: auto;
+    }
+
+    .tab-content img {
+      width: 100%;
+      border-radius: 4px;
+      margin-top: 10px;
+    }
+    .note {
+    position: absolute;
+    animation: move 6s linear infinite;
+    font-size: 4rem;
+    color: #ffffff; /* or rgba for transparency */
+    z-index: 10;
+}
+
+.note:nth-child(1) { animation-duration: 8s; top: 45%; }
+.note:nth-child(2) { animation-duration: 9s; top: 30%; font-size: 3rem; }
+.note:nth-child(3) { animation-duration: 11s; top: 55%; }
+.note:nth-child(4) { animation-duration: 7s; top: 70%; font-size: 4.5rem; }
+.note:nth-child(5) { animation-duration: 10s; top: 85%; }
+
+@keyframes move {
+    from { left: 100%; }
+    to { left: -10%; }
+}
+
+
+    /* Buttons */
+    button {
+      padding: 12px;
+      background-color: #ffffff22;
+      border: none;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background 0.3s;
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #ffffff44;
+    }
+
+    #spotifyEmbedContainer {
+      width: 100%;
+      height: 150px;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      display: none;
+    }
+
+  </style>
+</head>
+
+<body>
+<div id="noteContainer"></div>
+
+
+<div class="container">
+  <div class="left-panel">
+    <div class="tabs">
+      <div class="tab-buttons">
+        <button class="active" onclick="showTab('overview')">Overview</button>
+        <button onclick="showTab('history')">History</button>
+        <button onclick="showTab('how')">How It’s Played</button>
+        <button onclick="showTab('culture')">Cultural Significance</button>
+      </div>
+
+      <div id="overview" class="tab-content">
+        <p>
+          The piano is a stringed keyboard instrument invented in the early 1700s. 
+          It produces sound by hammers striking strings when keys are pressed, 
+          combining both percussion and string characteristics.
+        </p>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6a/Grand_piano2.jpg" 
+             alt="Grand piano overview" />
+      </div>
+
+      <div id="history" class="tab-content" style="display: none;">
+        <p>
+          The piano was invented around 1700 by Bartolomeo Cristofori in Italy. 
+          It evolved from earlier keyboard instruments like the harpsichord 
+          and clavichord, and became central to Western classical and popular music.
+        </p>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6d/Bartolomeo_Cristofori.jpg" 
+             alt="Portrait of Bartolomeo Cristofori" />
+      </div>
+
+      <div id="how" class="tab-content" style="display: none;">
+        <p>
+          The piano is played by pressing keys on a keyboard. Each key lifts a hammer 
+          that strikes a string, producing a sound. Musicians use dynamics, pedals, 
+          and finger techniques to shape tone and expression.
+        </p>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/Piano_action.jpg" 
+             alt="Inside mechanism of a piano" />
+      </div>
+
+      <div id="culture" class="tab-content" style="display: none;">
+        <p>
+          The piano has deep cultural significance, from European concert halls to 
+          jazz clubs and modern studios. It is often called the "king of instruments" 
+          for its range, versatility, and role in music across genres and cultures.
+        </p>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e6/Thelonious_Monk%2C_M02.jpg" 
+             alt="Thelonious Monk playing piano" />
+      </div>
+
+    </div>
+
+    <div id="spotifyEmbedContainer">
+      <iframe
+        src="https://open.spotify.com/embed/track/1I5OFCYZMqcHcAbLeH46Ew?utm_source=generator" 
+        width="100%" frameborder="0" 
+        allowfullscreen="" 
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+        loading="lazy">
+      </iframe>
+    </div>
+
+
+
+    <button id="listenBtn">Hear What I Sound Like</button>
+    <button id="tryAnotherBtn">Try Another Instrument</button>
+  </div>
+
+  <div class="right-panel">
+    <div class="sketchfab-embed-wrapper">
+      <iframe
+        title="Grand Piano"
+        frameborder="0"
+        allowfullscreen
+        mozallowfullscreen="true"
+        webkitallowfullscreen="true"
+        allow="autoplay; fullscreen; xr-spatial-tracking"
+        xr-spatial-tracking
+        execution-while-out-of-viewport
+        execution-while-not-rendered
+        web-share
+        src="https://sketchfab.com/models/4ce9e8dbeb74425eb215e4168807dcb5/embed"
+      ></iframe>
+      <p>
+        <a href="https://sketchfab.com/3d-models/grand-piano-4ce9e8dbeb74425eb215e4168807dcb5" target="_blank" rel="nofollow">Grand Piano</a> by 
+        <a href="https://sketchfab.com/richterbelmont26" target="_blank" rel="nofollow">richterbelmont26</a> on 
+        <a href="https://sketchfab.com" target="_blank" rel="nofollow">Sketchfab</a>
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+  function showTab(tabId) {
+    const contents = document.querySelectorAll('.tab-content');
+    contents.forEach(content => content.style.display = 'none');
+
+    const buttons = document.querySelectorAll('.tab-buttons button');
+    buttons.forEach(btn => btn.classList.remove('active'));
+
+    document.getElementById(tabId).style.display = 'block';
+
+    const clickedButton = Array.from(buttons).find(btn => 
+      btn.getAttribute('onclick')?.includes(tabId)
+    );
+    if (clickedButton) clickedButton.classList.add('active');
+  }
+
+  document.getElementById('tryAnotherBtn').addEventListener('click', () => {
+    window.location.href = '/recognition';
+  });
+
+  document.getElementById('listenBtn').addEventListener('click', () => {
+    const container = document.getElementById('spotifyEmbedContainer');
+    container.style.display = 'block';
+    container.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
+const listenBtn = document.getElementById('listenBtn');
+
+listenBtn.addEventListener('click', () => {
+    const container = document.getElementById('spotifyEmbedContainer');
+    container.style.display = 'block';
+    container.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+    const noteContainer = document.getElementById('noteContainer');
+
+    // create a note every 300ms
+    const spawnNotes = setInterval(() => {
+        const note = document.createElement('div');
+        note.className = 'note';
+        const symbols = ['&#9835;', '&#9833;', '&#9839;', '&#119070;', '&#9834;'];
+        note.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+        note.style.top = Math.random() * 80 + '%'; // random vertical position
+        noteContainer.appendChild(note);
+
+        // remove after animation ends (6s or match your CSS duration)
+        setTimeout(() => note.remove(), 9000); 
+    }, 300);
+
+    // stop spawning after 15 seconds
+    setTimeout(() => clearInterval(spawnNotes), 10000);
+});
+
+
+</script>
+
+</body>
+</html>
