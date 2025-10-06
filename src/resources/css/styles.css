@@ -153,109 +153,180 @@ button:active {
 /* learn more.hbs (Instrument Page) */
 /* ============================= */
 
-.instrument-page {
-    background: linear-gradient(135deg, #1a1c2b, #3b1f5f);
-    color: #f5f5f5;
-    font-family: 'Poppins', sans-serif;
-    position: relative;
-    min-height: 100vh;
-    overflow: hidden;
-    padding-bottom: 50px;
+  /* Base Reset & Animated Background */
+    html, body {
+      padding: 0;
+      height: 100%;
+      font-family: sans-serif;
+    }
+
+    body {
+      background: linear-gradient(-45deg, #1a2a6c, #b21f1f, #fdbb2d, #1a2a6c);
+      background-size: 400% 400%;
+      animation: waveGradient 20s ease-in-out infinite;
+      color: white;
+    }
+
+    @keyframes waveGradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Flex container for left/right panels */
+    .container {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      height: 100vh;
+    }
+
+    /* Left panel (info) */
+.left-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 100vh;
+  padding: 30px;
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden; /* remove scrolling */
 }
 
-/* Hero section */
-.instrument-page .hero {
-    text-align: center;
-    padding: 2rem;
-}
+    /* Right panel (3D model) */
+    .right-panel {
+      width: 60%;
+      min-width: 500px;
+      flex-shrink: 0;
+      position: relative;
+      background: rgba(0, 0, 0, 0.2);
+      box-sizing: border-box;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+    }
 
-.instrument-page .hero img {
-    max-width: 280px;
-    border-radius: 20px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
-    margin-bottom: 1rem;
-}
+    /* Sketchfab embed styling */
+    .sketchfab-embed-wrapper {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
 
-.instrument-page .hero h1 {
-    font-size: 2.5rem;
-    margin: 0.5rem 0;
-    color: #ffcf40; /* golden highlight */
-}
+    .sketchfab-embed-wrapper iframe {
+      flex-grow: 1;
+      width: 100%;
+      border: none;
+      background: #000;
+    }
 
-.instrument-page .hero p {
-    font-size: 1.2rem;
-    color: #e0e0e0;
-}
+    .sketchfab-embed-wrapper p {
+      font-size: 13px;
+      font-weight: normal;
+      margin: 5px 0 0 0;
+      color: #4A4A4A;
+      text-align: center;
+    }
 
-/* Tabs */
-.instrument-page .info-tabs {
-    max-width: 900px;
-    margin: 2rem auto;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 15px;
-    padding: 1.5rem;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-}
+    .sketchfab-embed-wrapper p a {
+      font-weight: bold;
+      color: #1CAAD9;
+      text-decoration: none;
+    }
 
-.instrument-page .nav-tabs {
-    border-bottom: 2px solid rgba(255,255,255,0.2);
-}
+    .sketchfab-embed-wrapper p a:hover {
+      text-decoration: underline;
+    }
 
-.instrument-page .nav-tabs li a {
-    color: #ffcf40;
-    font-weight: bold;
-}
+    /* Tabs */
+    .tabs {
+      flex-grow: 1;
+    }
 
-.instrument-page .tab-content {
-    margin-top: 1.5rem;
-    color: #f5f5f5;
-}
+    .tab-buttons {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
 
-/* Related items grid */
-.instrument-page .related-item {
-    display: inline-block;
-    text-align: center;
-    margin: 1rem;
-}
+    .tab-buttons button {
+      flex: 1;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      cursor: pointer;
+      color: white;
+      border-radius: 4px;
+      transition: background 0.3s;
+    }
 
-.instrument-page .related-item img {
-    width: 120px;
-    border-radius: 10px;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.4);
-    transition: transform 0.3s ease;
-}
+    .tab-buttons button.active,
+    .tab-buttons button:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
 
-.instrument-page .related-item img:hover {
-    transform: scale(1.05);
-}
+    .tab-content {
+      background: rgba(0, 0, 0, 0.4);
+      padding: 15px;
+      border-radius: 5px;
+      min-height: 200px;
+      overflow-y: auto;
+    }
 
-/* Floating music notes for background */
-.instrument-page .music-note {
+    .tab-content img {
+      width: 100%;
+      border-radius: 4px;
+      margin-top: 10px;
+    }
+    .note {
     position: absolute;
-    font-size: 2.5rem;
-    color: rgba(255,255,255,0.1);
-    animation: float 12s linear infinite;
-    z-index: 0;
+    animation: move 6s linear infinite;
+    font-size: 4rem;
+    color: #ffffff; /* or rgba for transparency */
+    z-index: 10;
 }
 
-@keyframes float {
-    from { transform: translateY(100vh) rotate(0deg); }
-    to   { transform: translateY(-10vh) rotate(360deg); }
+.note:nth-child(1) { animation-duration: 8s; top: 45%; }
+.note:nth-child(2) { animation-duration: 9s; top: 30%; font-size: 3rem; }
+.note:nth-child(3) { animation-duration: 11s; top: 55%; }
+.note:nth-child(4) { animation-duration: 7s; top: 70%; font-size: 4.5rem; }
+.note:nth-child(5) { animation-duration: 10s; top: 85%; }
+
+@keyframes move {
+    from { left: 100%; }
+    to { left: -10%; }
 }
 
-/* Spotlight effect that follows mouse */
-.instrument-page::before {
-    content: "";
-    position: absolute;
-    top: var(--y, 50%);
-    left: var(--x, 50%);
-    width: 300px;
-    height: 300px;
-    background: radial-gradient(circle, rgba(255,255,255,0.15), transparent 70%);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-}
+
+    /* Buttons */
+    button {
+      padding: 12px;
+      background-color: #ffffff22;
+      border: none;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background 0.3s;
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #ffffff44;
+    }
+
+    #spotifyEmbedContainer {
+      width: 100%;
+      height: 150px;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      display: none;
+    }
+
 
 /* Nav */
 nav img {
@@ -264,9 +335,11 @@ nav img {
     height: 60px;
 }
 
+
 nav {
-    margin: none;
-    background-color: white;
+   margin: 0;
+   background: transparent; /* fully see-through */
+   box-shadow: none;      
 }
 
 header {
@@ -274,7 +347,6 @@ header {
     top: 0;
     left: 0;
     right: 0;
-
     z-index: 1000;
 }
 
