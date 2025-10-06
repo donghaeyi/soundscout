@@ -284,22 +284,22 @@ button:active {
 nav img {
   margin: 5px auto 5px 20px;
   cursor: pointer;
-  height: 60px;
+  height: 45px;
 }
 
 nav {
   margin: 0;
+
 }
 
 /* ============================= */
 /* Header */
 /* ============================= */
 header {
-  position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  background-color: lightsalmon;
+  background-color: white;
   z-index: 1000;
 }
 
@@ -327,7 +327,6 @@ body {
 }
 
 main {
-  margin-top: 75px;
   flex-grow: 1;
   position: relative;
 }
