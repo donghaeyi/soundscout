@@ -1,18 +1,12 @@
-<html>
-  <head>
-    <script>
-      navigator.mediaDevices.getUserMedia({ video: true, audio: false })
-      .then((stream) => { const video = document.getElementById("video")
-      video.srcObject = stream }) .catch((err) => alert(`${err.name}
-      ${err.message}`));
-    </script>
-  </head>
-  <body>
-    <main>
-      <div>
-        <video id="video" autoplay></video>
-      </div>
-    </main>
-    
-  </body>
-</html>
+<section id="recognition-section">
+  <div id="video-container">
+    <video id="video" autoplay></video>
+  </div>
+
+  <script>
+    navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+    .then((stream) => { const video = document.getElementById("video")
+    video.srcObject = stream; }) .catch((err) => alert(`${err.name}
+    ${err.message}`));
+  </script>
+</section>

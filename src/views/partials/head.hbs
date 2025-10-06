@@ -1,9 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/styles.css">
-    {{>title}}
-</head>
-</html>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<link rel="stylesheet" href="css/styles.css" />
+
+<link rel="icon" type="image/png" href="/img/favicon.png" />
+
+{{! TensorFlow.js and COCO-SSD model for object detection }}
+<script
+  src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.2.0/dist/tf.min.js"
+></script>
+
+<script
+  src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd@2.2.2"
+></script>
