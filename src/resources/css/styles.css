@@ -289,7 +289,6 @@ nav img {
 
 nav {
   margin: 0;
-  background-color: white;
 }
 
 /* ============================= */
@@ -300,19 +299,19 @@ header {
   top: 0;
   left: 0;
   right: 0;
-  background-color: white;
+  background-color: lightsalmon;
   z-index: 1000;
 }
 
 /* ============================= */
 /* Body */
 /* ============================= */
-body {
-  margin-top: 75px; /* Move the content of each page down so the nav bar wont block it */
-  min-height: 100vh;
+/* body {
+  margin-top: 75px;
+  /* min-height: 100vh;
   flex-grow: 1;
   background-color: white;
-}
+} */
 
 html {
   height: 100%;
@@ -324,6 +323,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100%;
+  background-color: lightsalmon;
 }
 
 main {
@@ -338,8 +338,7 @@ main {
 footer {
   flex-shrink: 0;
   width: 100%;
-  background-color: #333;
-  color: #ccc;
+  color: black;
   padding: 15px 0;
   text-align: center;
 }
