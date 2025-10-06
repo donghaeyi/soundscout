@@ -1,12 +1,104 @@
-<section id="recognition-section">
-  <div id="video-container">
-    <video id="video" autoplay></video>
-  </div>
+<body>
+    <section id="recognition-section">
+      <div id="video-container">
+        <video id="video" autoplay style="width: 100%; max-width: 600px;"></video>
+      </div>
+      <p id="result">Loading model...</p> 
+      <p id="confidence"></p>
+    </section>
 
-  <script>
-    navigator.mediaDevices.getUserMedia({ video: true, audio: true })
-    .then((stream) => { const video = document.getElementById("video")
-    video.srcObject = stream; }) .catch((err) => alert(`${err.name}
-    ${err.message}`));
-  </script>
-</section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
+    <script src="https://unpkg.com/ml5@latest/dist/ml5.min.js"></script>
+
+    <script>
+      let classifier;
+      const video = document.getElementById("video");
+      const resultElement = document.getElementById("result");
+      const confidenceElement = document.getElementById("confidence");
+
+      // --- Step 1: Start the Webcam ---
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+          .then((stream) => {
+            video.srcObject = stream;
+            video.addEventListener("loadeddata", loadModel);
+          })
+          .catch((err) => {
+            resultElement.textContent = `Webcam Error: ${err.name} ${err.message}`;
+            console.error(err);
+          });
+      } else {
+        resultElement.textContent = "getUserMedia not supported on your browser.";
+      }
+
+      // --- Step 2: Load the Model ---
+      async function loadModel() {
+        try {
+          resultElement.textContent = "Loading model...";
+          classifier = await ml5.imageClassifier("MobileNet");
+          resultElement.textContent = "Model ready! Show an object to the camera.";
+
+          // Add a slight delay to ensure video stream is stable
+          setTimeout(() => classifyVideo(), 500);
+        } catch (err) {
+          console.error("Model loading error:", err);
+          resultElement.textContent = "Error loading model.";
+        }
+      }
+
+      // --- Step 3: Classify continuously ---
+      async function classifyVideo() {
+        if (!classifier || video.readyState !== 4) {
+          requestAnimationFrame(classifyVideo);
+          return;
+        }
+
+        try {
+          // Modern ml5 uses promises instead of callbacks
+          const results = await classifier.classify(video);
+          gotResult(null, results);
+        } catch (error) {
+          gotResult(error, null);
+        }
+      }
+
+      // --- Step 4: Handle the Classification Results ---
+      function gotResult(error, results) {
+          if (error) {
+              console.error(error);
+              resultElement.textContent = "An error occurred during classification.";
+          } else {
+              if (results && results.length > 0) {
+                  const label = results[0].label.toLowerCase();
+                  const confidence = results[0].confidence;
+
+                  // Check if it’s an instrument by matching certain keywords
+                  const instrumentKeywords = [
+                      "guitar", "piano", "violin", "flute", "drum", "trumpet",
+                      "saxophone", "clarinet", "cello", "harp", "trombone",
+                      "accordion", "banjo", "harmonica", "keyboard", "xylophone"
+                  ];
+
+                  const isInstrument = instrumentKeywords.some(word => label.includes(word));
+
+                  if (isInstrument) {
+                      resultElement.textContent = `Instrument: ${label.split(',')[0].trim()}`;
+                      confidenceElement.textContent = `Confidence: ${Math.floor(confidence * 100)}%`;
+                  } else {
+                      resultElement.textContent = "Ready to detect...";
+                      confidenceElement.textContent = "";
+                  }
+              } else {
+                  resultElement.textContent = "Ready to detect...";
+                  confidenceElement.textContent = "";
+              }
+          }
+
+          // Continue classifying the next frame
+          window.requestAnimationFrame(classifyVideo);
+
+      }
+    </script>
+</body>
+
+
