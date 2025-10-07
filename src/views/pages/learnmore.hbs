@@ -190,9 +190,6 @@
     <div class="tabs">
       <div class="tab-buttons">
         <button class="active" onclick="showTab('overview')">Overview</button>
-        <button onclick="showTab('history')">History</button>
-        <button onclick="showTab('how')">How It’s Played</button>
-        <button onclick="showTab('culture')">Cultural Significance</button>
       </div>
 
       <div id="overview" class="tab-content">
@@ -204,37 +201,6 @@
         <img src="https://upload.wikimedia.org/wikipedia/commons/6/6a/Grand_piano2.jpg" 
              alt="Grand piano overview" />
       </div>
-
-      <div id="history" class="tab-content" style="display: none;">
-        <p>
-          The piano was invented around 1700 by Bartolomeo Cristofori in Italy. 
-          It evolved from earlier keyboard instruments like the harpsichord 
-          and clavichord, and became central to Western classical and popular music.
-        </p>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6d/Bartolomeo_Cristofori.jpg" 
-             alt="Portrait of Bartolomeo Cristofori" />
-      </div>
-
-      <div id="how" class="tab-content" style="display: none;">
-        <p>
-          The piano is played by pressing keys on a keyboard. Each key lifts a hammer 
-          that strikes a string, producing a sound. Musicians use dynamics, pedals, 
-          and finger techniques to shape tone and expression.
-        </p>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/Piano_action.jpg" 
-             alt="Inside mechanism of a piano" />
-      </div>
-
-      <div id="culture" class="tab-content" style="display: none;">
-        <p>
-          The piano has deep cultural significance, from European concert halls to 
-          jazz clubs and modern studios. It is often called the "king of instruments" 
-          for its range, versatility, and role in music across genres and cultures.
-        </p>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e6/Thelonious_Monk%2C_M02.jpg" 
-             alt="Thelonious Monk playing piano" />
-      </div>
-
     </div>
 
     <div id="spotifyEmbedContainer">
@@ -247,35 +213,14 @@
       </iframe>
     </div>
 
-
-
     <button id="listenBtn">Hear What I Sound Like</button>
     <button id="tryAnotherBtn">Try Another Instrument</button>
   </div>
 
-  <div class="right-panel">
-    <div class="sketchfab-embed-wrapper">
-      <iframe
-        title="Grand Piano"
-        frameborder="0"
-        allowfullscreen
-        mozallowfullscreen="true"
-        webkitallowfullscreen="true"
-        allow="autoplay; fullscreen; xr-spatial-tracking"
-        xr-spatial-tracking
-        execution-while-out-of-viewport
-        execution-while-not-rendered
-        web-share
-        src="https://sketchfab.com/models/4ce9e8dbeb74425eb215e4168807dcb5/embed"
-      ></iframe>
-      <p>
-        <a href="https://sketchfab.com/3d-models/grand-piano-4ce9e8dbeb74425eb215e4168807dcb5" target="_blank" rel="nofollow">Grand Piano</a> by 
-        <a href="https://sketchfab.com/richterbelmont26" target="_blank" rel="nofollow">richterbelmont26</a> on 
-        <a href="https://sketchfab.com" target="_blank" rel="nofollow">Sketchfab</a>
-      </p>
-    </div>
-  </div>
+  <!-- Right panel removed -->
+  <div class="right-panel"></div>
 </div>
+
 
 <script>
   function showTab(tabId) {
