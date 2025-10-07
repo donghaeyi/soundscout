@@ -21,6 +21,7 @@
     "Nguyen Pham"
   ],
   "dependencies": {
+    "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "express-handlebars": "^8.0.1",
     "hbs": "^4.2.0"

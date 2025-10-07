@@ -1,3 +1,6 @@
+require('dotenv').config(); 
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+
 const express = require("express");
 const exphbs = require("express-handlebars");
 const path = require("path");
