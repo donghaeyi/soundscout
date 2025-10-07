@@ -1,104 +1,125 @@
 <body>
-    <section id="recognition-section">
-      <div id="video-container">
-        <video id="video" autoplay style="width: 100%; max-width: 600px;"></video>
-      </div>
-      <p id="result">Loading model...</p> 
-      <p id="confidence"></p>
-    </section>
+  <section id="recognition-section">
+    <div id="video-container">
+      <video id="video" autoplay style="width: 100%; max-width: 600px;"></video>
+    </div>
+    <p id="result">Loading model...</p> 
+    <p id="confidence"></p>
+    <div id="button-container" style="size: 40px"></div> <!-- empty div for dynamic button -->
+  </section>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
-    <script src="https://unpkg.com/ml5@latest/dist/ml5.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
+  <script src="https://unpkg.com/ml5@latest/dist/ml5.min.js"></script>
 
-    <script>
-      let classifier;
-      const video = document.getElementById("video");
-      const resultElement = document.getElementById("result");
-      const confidenceElement = document.getElementById("confidence");
+  <script>
+    let classifier;
+    const video = document.getElementById("video");
+    const resultElement = document.getElementById("result");
+    const confidenceElement = document.getElementById("confidence");
+    const buttonContainer = document.getElementById("button-container");
 
-      // --- Step 1: Start the Webcam ---
-      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-        navigator.mediaDevices.getUserMedia({ video: true, audio: false })
-          .then((stream) => {
-            video.srcObject = stream;
-            video.addEventListener("loadeddata", loadModel);
-          })
-          .catch((err) => {
-            resultElement.textContent = `Webcam Error: ${err.name} ${err.message}`;
-            console.error(err);
-          });
-      } else {
-        resultElement.textContent = "getUserMedia not supported on your browser.";
+    // --- Step 1: Start the Webcam ---
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+        .then((stream) => {
+          video.srcObject = stream;
+          video.addEventListener("loadeddata", loadModel);
+        })
+        .catch((err) => {
+          resultElement.textContent = `Webcam Error: ${err.name} ${err.message}`;
+          console.error(err);
+        });
+    } else {
+      resultElement.textContent = "getUserMedia not supported on your browser.";
+    }
+
+    // --- Step 2: Load the Model ---
+    async function loadModel() {
+      try {
+        resultElement.textContent = "Loading model...";
+        classifier = await ml5.imageClassifier("MobileNet");
+        resultElement.textContent = "Model ready! Show an instrument to the camera.";
+        setTimeout(() => classifyVideo(), 500);
+      } catch (err) {
+        console.error("Model loading error:", err);
+        resultElement.textContent = "Error loading model.";
+      }
+    }
+
+    // --- Step 3: Classify continuously ---
+    async function classifyVideo() {
+      if (!classifier || video.readyState !== 4) {
+        requestAnimationFrame(classifyVideo);
+        return;
       }
 
-      // --- Step 2: Load the Model ---
-      async function loadModel() {
-        try {
-          resultElement.textContent = "Loading model...";
-          classifier = await ml5.imageClassifier("MobileNet");
-          resultElement.textContent = "Model ready! Show an object to the camera.";
+      try {
+        const results = await classifier.classify(video);
+        gotResult(null, results);
+      } catch (error) {
+        gotResult(error, null);
+      }
+    }
 
-          // Add a slight delay to ensure video stream is stable
-          setTimeout(() => classifyVideo(), 500);
-        } catch (err) {
-          console.error("Model loading error:", err);
-          resultElement.textContent = "Error loading model.";
-        }
+    // --- Step 4: Handle the Classification Results ---
+    let lockedInstrument = null; // Currently locked instrument
+
+    function gotResult(error, results) {
+      if (error) {
+        console.error(error);
+        resultElement.textContent = "An error occurred during classification.";
+        return;
       }
 
-      // --- Step 3: Classify continuously ---
-      async function classifyVideo() {
-        if (!classifier || video.readyState !== 4) {
-          requestAnimationFrame(classifyVideo);
-          return;
-        }
+      if (results && results.length > 0) {
+        const label = results[0].label.toLowerCase();
+        const confidence = results[0].confidence;
 
-        try {
-          // Modern ml5 uses promises instead of callbacks
-          const results = await classifier.classify(video);
-          gotResult(null, results);
-        } catch (error) {
-          gotResult(error, null);
-        }
-      }
+        const instrumentKeywords = [
+          "guitar", "piano", "violin", "flute", "drum", "trumpet",
+          "saxophone", "clarinet", "cello", "harp", "trombone",
+          "accordion", "banjo", "harmonica", "keyboard", "xylophone"
+        ];
 
-      // --- Step 4: Handle the Classification Results ---
-      function gotResult(error, results) {
-          if (error) {
-              console.error(error);
-              resultElement.textContent = "An error occurred during classification.";
-          } else {
-              if (results && results.length > 0) {
-                  const label = results[0].label.toLowerCase();
-                  const confidence = results[0].confidence;
+        const isInstrument = instrumentKeywords.some(word => label.includes(word));
 
-                  // Check if it’s an instrument by matching certain keywords
-                  const instrumentKeywords = [
-                      "guitar", "piano", "violin", "flute", "drum", "trumpet",
-                      "saxophone", "clarinet", "cello", "harp", "trombone",
-                      "accordion", "banjo", "harmonica", "keyboard", "xylophone"
-                  ];
+        if (isInstrument) {
+          resultElement.innerHTML = `Instrument: <strong>${label.split(',')[0].trim()}</strong>`;
+          confidenceElement.textContent = `Confidence: ${Math.floor(confidence * 100)}%`;
 
-                  const isInstrument = instrumentKeywords.some(word => label.includes(word));
+          const currentInstrument = label.split(',')[0].trim();
 
-                  if (isInstrument) {
-                      resultElement.textContent = `Instrument: ${label.split(',')[0].trim()}`;
-                      confidenceElement.textContent = `Confidence: ${Math.floor(confidence * 100)}%`;
-                  } else {
-                      resultElement.textContent = "Ready to detect...";
-                      confidenceElement.textContent = "";
-                  }
-              } else {
-                  resultElement.textContent = "Ready to detect...";
-                  confidenceElement.textContent = "";
-              }
+          // Lock or update button only if confidence >=50%
+          if (confidence >= 0.5) {
+            if (lockedInstrument !== currentInstrument) {
+              // Remove previous button if exists
+              const existingBtn = document.getElementById("learnMoreBtn");
+              if (existingBtn) existingBtn.remove();
+
+              // Create new button
+              const btn = document.createElement("button");
+              btn.id = "learnMoreBtn";
+              btn.innerHTML = `Learn More About ${currentInstrument.toUpperCase()}`;
+              btn.onclick = () => window.location.href = `/learnmore?instrument=${encodeURIComponent(currentInstrument)}`;
+              btn.style.marginTop = "10px";
+              btn.style.width = "380px";
+              btn.style.height = "70px";
+              buttonContainer.appendChild(btn);
+
+              lockedInstrument = currentInstrument; // Update locked instrument
+            }
           }
-
-          // Continue classifying the next frame
-          window.requestAnimationFrame(classifyVideo);
-
+        } else {
+          resultElement.textContent = "Please show your instrument. Ready to detect...";
+          confidenceElement.textContent = "";
+          // Remove button and reset lock if no instrument detected
+          const existingBtn = document.getElementById("learnMoreBtn");
+          if (existingBtn) existingBtn.remove();
+          lockedInstrument = null;
+        }
       }
-    </script>
+      
+      window.requestAnimationFrame(classifyVideo);
+    }
+  </script>
 </body>
-
-
