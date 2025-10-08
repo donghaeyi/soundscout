@@ -57,7 +57,7 @@ app.get("/api/overview", async (req, res) => {
     // FIX 1: Switched to the current stable alias for better compatibility.
     const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
-    const prompt = `Give a short, 2-3 sentence beginner-friendly description of the musical instrument "${instrument}". Avoid technical jargon and keep it simple. Only provide the descriptive text, no introductory phrases.`;
+    const prompt = `Give a short, 6-7 sentence beginner-friendly description of the musical instrument "${instrument}". Avoid technical jargon and keep it simple. Only provide the descriptive text, no introductory phrases.`;
 
     // *** CRITICAL FIX: Corrected the generateContent call structure. ***
     // We now pass the 'prompt' string as the first argument, and the configuration
@@ -65,7 +65,7 @@ app.get("/api/overview", async (req, res) => {
     const result = await model.generateContent(
         prompt,
         {
-            maxOutputTokens: 100 // Limits output size for reliable short responses.
+            maxOutputTokens: 300 // Limits output size for reliable short responses.
         }
     );
     

@@ -162,24 +162,25 @@
       display: none;
     }
 
-.right-panel {
-  width: 60%;            /* adjust if needed /
-  min-width: 300px;      / avoid being too narrow /
-  max-width: 600px;      / optional, limits size on large screens /
-  padding: 10px;
-  display: flex;
-  justify-content: center; / centers the image /
-  align-items: center;     / vertical centering /
-  box-sizing: border-box;
+  .right-panel {
+    width: 50%;              /* panel takes 50% of the screen width */
+    min-width: 300px;        /* won’t shrink below 300px */
+    max-width: 1000px;        /* won’t grow above 600px */
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
 }
 
 .right-panel img {
-  width: 100%;       / fills container width /
-  height: auto;      / keeps aspect ratio /
-  max-height: 80vh;  / fits into viewport height /
-  object-fit: contain; / ensures no cropping */
-  border-radius: 8px;
+    width: 100%;             /* image fills the panel width */
+    height: auto;            /* maintain aspect ratio */
+    max-height: 80vh;        /* max 80% of viewport height */
+    object-fit: contain;       /* fills panel nicely, crops if needed */
+    border-radius: 8px;
 }
+
   </style>
 
 <body>
@@ -219,11 +220,11 @@
     </div>
 
     <!-- Right panel intentionally left blank -->
-<div class="right-panel">
+<div class="right-panel"> 
   <img id="instrumentImage" 
        src="/img/default_instrument.png" 
        alt="Instrument image" 
-       style="max-width: 100%; height: auto; border-radius: 8px;" />
+       style="max-width: 100%; height: 800px; border-radius: 8px;" />
 </div>
 
 
