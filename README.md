@@ -21,6 +21,11 @@
 
 ---
 
+## Demo Video
+[![Video Demo: SoundScout](src/resources/img/soundscout.png)](https://youtu.be/HM08UwL2tco?si=Hoyj6PUG3hnnYw40)
+
+---
+
 ## Technology Stack
 
 - **Frontend:** HTML, CSS, JavaScript  
