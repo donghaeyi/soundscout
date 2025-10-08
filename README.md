@@ -21,6 +21,12 @@
 
 ---
 
+## Demo Video
+<a href="[http://www.youtube.com/watch?feature=player_embedded&v=cdr9eSnpycM](https://youtu.be/HM08UwL2tco?si=Hoyj6PUG3hnnYw40)" target="_blank"><img src="src/resources/img/soundscout.png" alt="cdr9eSnpycM" width="683.33" height="360" border="10" /></a>
+
+
+---
+
 ## Technology Stack
 
 - **Frontend:** HTML, CSS, JavaScript  
